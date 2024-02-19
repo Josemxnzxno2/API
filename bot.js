@@ -61,7 +61,7 @@ bot.onText(/\/help/, (msg) => {
   /start - Inicia una interacción con el asistente.
   /help - Despliega el catálogo de órdenes disponibles y sus explicaciones.
   /resultados - Exhibe los desenlaces de los encuentros futbolísticos de la jornada.
-  /borrar - Elimina los dos mensajes previos en la charla con el asistente.
+  /borrar - Elimina los cuatro mensajes previos en la charla con el asistente.
   /ligas - Muestra la enumeración de ligas a las que es posible solicitar datos.
   /tabla [código de liga] - Presenta la clasificación de una liga específica.
   /equipos [código de competición] - Muestra el conjunto de equipos disponibles para una competición particular.
@@ -77,8 +77,8 @@ bot.onText(/\/help/, (msg) => {
  */
 bot.onText(/\/borrar/, (msg) => {
   const chatId = msg.chat.id;
-  // Utilizar el método deleteMessage para borrar los dos últimos mensajes en la conversación
-  for (let i = 0; i < 2; i++) {
+  // Utilizar el método deleteMessage para borrar los cuatro últimos mensajes en la conversación
+  for (let i = 0; i < 4; i++) {
     bot.deleteMessage(chatId, msg.message_id - i);
   }
 });
