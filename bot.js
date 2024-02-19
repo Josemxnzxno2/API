@@ -3,7 +3,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 
 // Token del bot de Telegram
-const token = 'tu_token_de_telegram';
+const token = '6318204120:AAEkicRP61AtRR5TN8dTkv5zD3or6jYOroA';
 
 // Crear una instancia del bot de Telegram
 const bot = new TelegramBot(token, { polling: true });
@@ -27,7 +27,7 @@ bot.onText(/\/resultados/, async (msg) => {
     // Realizar la consulta a la API de resultados
     const response = await axios.get('https://api.football-data.org/v4/matches', {
       headers: {
-        'X-Auth-Token': 'tu_token_de_API', // Token de la API
+        'X-Auth-Token': '647c058b5ac34db8883bdc8394f0eba5', // Token de la API
       },
     });
     // Procesar la respuesta de la API y construir el mensaje de resultados
@@ -55,17 +55,18 @@ bot.onText(/\/help/, (msg) => {
   const chatId = msg.chat.id;
   // Mostrar una lista de comandos disponibles
   const ayudaMensaje = `
-    Hola, este bot contiene datos sobre fútbol, debajo encontraras información sobre las diferentes consultas.
-    - Lista de comandos disponibles:
-    /start - Inicia una conversación con el bot.
-    /help - Muestra la lista de comandos disponibles y su explicación.
-    /resultados - Muestra los resultados de los partidos de fútbol del día de hoy.
-    /borrar - Borra los dos últimos mensajes en la conversación con el bot.
-    /ligas - Muestra la lista de ligas disponibles a las que se puede pedir información.
-    /tabla [código de liga] - Muestra la tabla de posiciones de una liga específica.
-    /equipos [código de competición] - Muestra la lista de equipos disponibles para una competición específica.
-    /goleadores [código de liga] - Muestra los 10 jugadores con más goles en una liga específica.
-    /competiciones - Muestra la lista de competiciones disponibles.
+  Saludos, este asistente contiene datos acerca del deporte del fútbol. A continuación, hallarás detalles sobre diversas solicitudes:
+
+  Relación de órdenes disponibles:
+  /start - Inicia una interacción con el asistente.
+  /help - Despliega el catálogo de órdenes disponibles y sus explicaciones.
+  /resultados - Exhibe los desenlaces de los encuentros futbolísticos de la jornada.
+  /borrar - Elimina los dos mensajes previos en la charla con el asistente.
+  /ligas - Muestra la enumeración de ligas a las que es posible solicitar datos.
+  /tabla [código de liga] - Presenta la clasificación de una liga específica.
+  /equipos [código de competición] - Muestra el conjunto de equipos disponibles para una competición particular.
+  /goleadores [código de liga] - Expone los 10 jugadores con mayor cantidad de goles en una liga específica.
+  /competiciones - Despliega el listado de competiciones disponibles.  
   `;
   bot.sendMessage(chatId, ayudaMensaje);
 });
@@ -92,7 +93,7 @@ bot.onText(/\/ligas/, async (msg) => {
     // Realizar la consulta a la API para obtener la lista de todas las ligas disponibles
     const response = await axios.get('https://api.football-data.org/v4/competitions', {
       headers: {
-        'X-Auth-Token': 'tu_token_de_API', // Token de la API
+        'X-Auth-Token': '647c058b5ac34db8883bdc8394f0eba5', // Token de la API
       },
     });
     // Procesar la respuesta de la API y construir el mensaje de ligas
@@ -107,7 +108,31 @@ bot.onText(/\/ligas/, async (msg) => {
     bot.sendMessage(chatId, 'Lo siento, ha ocurrido un error al obtener la lista de ligas.');
   }
 });
+bot.on('message', (msg) => {
+  const chatId = msg.chat.id;
+  const messageText = msg.text;
 
+  // Verificar si el mensaje no es un comando
+  if (!messageText.startsWith('/')) {
+    // Mensaje de ayuda para el usuario sobre los comandos disponibles
+    const ayudaMensaje = `
+      ¡Hola! Parece que has enviado un mensaje que no es un comando. Aquí tienes algunos comandos que puedes utilizar:
+      
+      /start - Iniciar una interacción con el asistente.
+      /help - Desplegar la lista de comandos disponibles y sus explicaciones.
+      /resultados - Exhibir los resultados de los partidos de fútbol de la jornada.
+      /borrar - Eliminar los dos últimos mensajes en la conversación con el asistente.
+      /ligas - Mostrar la lista de ligas disponibles.
+      /tabla [código de liga] - Presentar la clasificación de una liga específica.
+      /equipos [código de competición] - Mostrar el conjunto de equipos disponibles para una competición particular.
+      /goleadores [código de liga] - Exponer los 10 jugadores con más goles en una liga específica.
+      /competiciones - Desplegar el listado de competiciones disponibles.
+    `;
+
+    // Enviar el mensaje de ayuda al usuario
+    bot.sendMessage(chatId, ayudaMensaje);
+  }
+});
 /**
  * Maneja el comando /tabla [código de liga] para mostrar la tabla de posiciones de una liga específica.
  * @param {object} msg - El objeto del mensaje recibido.
@@ -120,7 +145,7 @@ bot.onText(/\/tabla (.+)/, async (msg, match) => {
     // Realizar la consulta a la API para obtener la tabla de posiciones de una liga específica
     const response = await axios.get(`https://api.football-data.org/v4/competitions/${leagueCode}/standings`, {
       headers: {
-        'X-Auth-Token': 'tu_token_de_API', // Token de la API
+        'X-Auth-Token': '647c058b5ac34db8883bdc8394f0eba5', // Token de la API
       },
     });
     // Procesar la respuesta de la API y construir el mensaje de tabla de posiciones
@@ -153,7 +178,7 @@ bot.onText(/\/equipos (.+)/, async (msg, match) => {
     // Realizar la consulta a la API para obtener la lista de equipos de una competición específica
     const response = await axios.get(`https://api.football-data.org/v4/competitions/${competitionId}/teams`, {
       headers: {
-        'X-Auth-Token': 'tu_token_de_API', // Token de la API
+        'X-Auth-Token': '647c058b5ac34db8883bdc8394f0eba5', // Token de la API
       },
     });
     // Procesar la respuesta de la API y construir el mensaje de equipos
@@ -181,7 +206,7 @@ bot.onText(/\/goleadores (.+)/, async (msg, match) => {
     // Realizar la consulta a la API para obtener los máximos goleadores de la liga específica
     const response = await axios.get(`https://api.football-data.org/v4/competitions/${leagueCode}/scorers`, {
       headers: {
-        'X-Auth-Token': 'tu_token_de_API', // Token de la API
+        'X-Auth-Token': '647c058b5ac34db8883bdc8394f0eba5', // Token de la API
       },
     });
     // Procesar la respuesta de la API y construir el mensaje de goleadores
@@ -209,7 +234,7 @@ bot.onText(/\/competiciones/, async (msg) => {
     // Realizar la consulta a la API para obtener la lista de todas las competiciones disponibles
     const response = await axios.get('https://api.football-data.org/v4/competitions', {
       headers: {
-        'X-Auth-Token': 'tu_token_de_API', // Token de la API
+        'X-Auth-Token': '647c058b5ac34db8883bdc8394f0eba5', // Token de la API
       },
     });
     // Procesar la respuesta de la API y construir el mensaje de competiciones
